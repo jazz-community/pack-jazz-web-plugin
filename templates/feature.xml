@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+    id="$pluginId$.feature"
+    label="$pluginName$"
+    provider-name="$pluginAuthor$"
+    version="$pluginVersion$">
+  <description>$pluginDescription$</description>
+  <copyright>$pluginAuthor$</copyright>
+  <license>$pluginLicense$</license>
+  <plugin
+      download-size="0"
+      id="$pluginId$"
+      install-size="0"
+      version="$pluginVersion$" />
+</feature>
