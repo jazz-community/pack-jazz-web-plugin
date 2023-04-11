@@ -1,0 +1,22 @@
+{
+  "name": "zip-jazz-web-plugin",
+  "version": "0.0.1",
+  "description": "Script for transforming a JavaScript plugin for the IBM Jazz Platform into the format needed by the server",
+  "bin": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MartinBenninger/zip-jazz-web-plugin.git"
+  },
+  "keywords": [
+    "IBM Jazz",
+    "EWM",
+    "Zip",
+    "Update Site"
+  ],
+  "author": "Martin Benninger",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MartinBenninger/zip-jazz-web-plugin/issues"
+  },
+  "homepage": "https://github.com/MartinBenninger/zip-jazz-web-plugin#readme"
+}
