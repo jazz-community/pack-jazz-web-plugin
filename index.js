@@ -35,6 +35,12 @@ const siteXmlOutput = siteXmlTemplate.replaceAll("$pluginId$", pluginId).replace
 
 outputArchive.append(siteXmlOutput, { name: updatesiteFolder + "site.xml" });
 
+const featuresFolder = updatesiteFolder + "features/";
+const pluginsFolder = updatesiteFolder + "plugins/";
+
+outputArchive.append(null, { name: featuresFolder });
+outputArchive.append(null, { name: pluginsFolder });
+
 outputArchive.finalize();
 
 function getFormattedDate(date) {
