@@ -43,11 +43,19 @@ outputArchive.append(null, { name: featuresFolder });
 outputArchive.append(null, { name: pluginsFolder });
 
 const featureJarArchive = archiver("zip");
+const featureXmlTemplate = fs.readFileSync(path.resolve(templatesFolder, "./feature.xml"), "utf8");
+const featureXmlOutput = featureXmlTemplate
+  .replaceAll("$pluginId$", pluginId)
+  .replaceAll("$pluginName$", pluginName)
+  .replaceAll("$pluginVersion$", pluginVersion)
+  .replaceAll("$pluginDescription$", pluginDescription)
+  .replaceAll("$pluginAuthor$", pluginAuthor)
+  .replaceAll("$pluginLicense$", pluginLicense);
 
+featureJarArchive.append(featureXmlOutput, { name: "feature.xml" });
 featureJarArchive.finalize();
 
 outputArchive.append(featureJarArchive, { name: featuresFolder + pluginId + ".feature_" + pluginVersion + ".jar" });
-
 outputArchive.finalize();
 
 process.stdout.write(zipFileName);
