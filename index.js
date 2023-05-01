@@ -21,7 +21,10 @@ const outputArchive = archiver("zip");
 
 outputArchive.pipe(outputFile);
 
-outputArchive.append(fs.createReadStream(path.resolve(__dirname, "./templates/updatesite.ini")), {
+const updatesiteTemplate = fs.readFileSync(path.resolve(__dirname, "./templates/updatesite.ini")).toString();
+const updatesiteOutput = updatesiteTemplate.replaceAll("$pluginId$", pluginId);
+
+outputArchive.append(updatesiteOutput, {
   name: pluginId + "_updatesite.ini",
 });
 
