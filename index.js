@@ -21,7 +21,8 @@ const outputArchive = archiver("zip");
 
 outputArchive.pipe(outputFile);
 
-const updatesiteTemplate = fs.readFileSync(path.resolve(__dirname, "./templates/updatesite.ini"), "utf8");
+const templatesFolder = path.resolve(__dirname, "./templates/");
+const updatesiteTemplate = fs.readFileSync(path.resolve(templatesFolder, "./updatesite.ini"), "utf8");
 const updatesiteOutput = updatesiteTemplate.replaceAll("$pluginId$", pluginId);
 const updatesiteFolder = pluginId + "_updatesite/";
 
@@ -30,7 +31,7 @@ outputArchive.append(updatesiteOutput, {
 });
 outputArchive.append(null, { name: updatesiteFolder });
 
-const siteXmlTemplate = fs.readFileSync(path.resolve(__dirname, "./templates/site.xml"), "utf8");
+const siteXmlTemplate = fs.readFileSync(path.resolve(templatesFolder, "./site.xml"), "utf8");
 const siteXmlOutput = siteXmlTemplate.replaceAll("$pluginId$", pluginId).replaceAll("$pluginVersion$", pluginVersion);
 
 outputArchive.append(siteXmlOutput, { name: updatesiteFolder + "site.xml" });
