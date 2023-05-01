@@ -21,16 +21,11 @@ const updatesiteTemplate = fs.readFileSync(path.resolve(templatesFolder, "./upda
 const siteXmlTemplate = fs.readFileSync(path.resolve(templatesFolder, "./site.xml"), "utf8");
 const featureXmlTemplate = fs.readFileSync(path.resolve(templatesFolder, "./feature.xml"), "utf8");
 const updatesiteFolder = pluginId + "_updatesite/";
-const featuresFolder = updatesiteFolder + "features/";
-const pluginsFolder = updatesiteFolder + "plugins/";
 
 const outputArchive = archiver("zip");
 outputArchive.pipe(fs.createWriteStream(path.resolve("./" + zipFileName + ".zip")));
 outputArchive.append(replaceTemplatePlaceholders(updatesiteTemplate), { name: pluginId + "_updatesite.ini" });
-outputArchive.append(null, { name: updatesiteFolder });
 outputArchive.append(replaceTemplatePlaceholders(siteXmlTemplate), { name: updatesiteFolder + "site.xml" });
-outputArchive.append(null, { name: featuresFolder });
-outputArchive.append(null, { name: pluginsFolder });
 
 const featureJarArchive = archiver("zip");
 featureJarArchive.append(replaceTemplatePlaceholders(featureXmlTemplate), { name: "feature.xml" });
@@ -46,8 +41,10 @@ pluginFiles.forEach(function (fileOrDirectory) {
 });
 pluginJarArchive.finalize();
 
-outputArchive.append(featureJarArchive, { name: featuresFolder + pluginId + ".feature_" + pluginVersion + ".jar" });
-outputArchive.append(pluginJarArchive, { name: pluginsFolder + zipFileName + ".jar" });
+outputArchive.append(featureJarArchive, {
+  name: updatesiteFolder + "features/" + pluginId + ".feature_" + pluginVersion + ".jar",
+});
+outputArchive.append(pluginJarArchive, { name: updatesiteFolder + "plugins/" + zipFileName + ".jar" });
 outputArchive.finalize();
 
 process.stdout.write(zipFileName);
