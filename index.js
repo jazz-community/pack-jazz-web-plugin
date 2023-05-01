@@ -15,20 +15,17 @@ const pluginAuthor = packageJson.author;
 const pluginLicense = packageJson.license;
 const pluginFiles = packageJson.zipJazzWebPlugin.pluginFiles;
 const zipFileName = pluginId + "_" + pluginVersion;
-
-const templatesFolder = path.resolve(__dirname, "./templates/");
-const updatesiteTemplate = fs.readFileSync(path.resolve(templatesFolder, "./updatesite.ini"), "utf8");
-const siteXmlTemplate = fs.readFileSync(path.resolve(templatesFolder, "./site.xml"), "utf8");
-const featureXmlTemplate = fs.readFileSync(path.resolve(templatesFolder, "./feature.xml"), "utf8");
 const updatesiteFolder = pluginId + "_updatesite/";
 
 const outputArchive = archiver("zip");
 outputArchive.pipe(fs.createWriteStream(path.resolve("./" + zipFileName + ".zip")));
-outputArchive.append(replaceTemplatePlaceholders(updatesiteTemplate), { name: pluginId + "_updatesite.ini" });
-outputArchive.append(replaceTemplatePlaceholders(siteXmlTemplate), { name: updatesiteFolder + "site.xml" });
+outputArchive.append(replaceTemplatePlaceholders(getTemplate("updatesite.ini")), {
+  name: pluginId + "_updatesite.ini",
+});
+outputArchive.append(replaceTemplatePlaceholders(getTemplate("site.xml")), { name: updatesiteFolder + "site.xml" });
 
 const featureJarArchive = archiver("zip");
-featureJarArchive.append(replaceTemplatePlaceholders(featureXmlTemplate), { name: "feature.xml" });
+featureJarArchive.append(replaceTemplatePlaceholders(getTemplate("feature.xml")), { name: "feature.xml" });
 featureJarArchive.finalize();
 
 const pluginJarArchive = archiver("zip");
@@ -48,6 +45,10 @@ outputArchive.append(pluginJarArchive, { name: updatesiteFolder + "plugins/" + z
 outputArchive.finalize();
 
 process.stdout.write(zipFileName);
+
+function getTemplate(templateName) {
+  return fs.readFileSync(path.resolve(__dirname, "./templates/" + templateName), "utf8");
+}
 
 function replaceTemplatePlaceholders(templateString) {
   const placeholders = new Map([
