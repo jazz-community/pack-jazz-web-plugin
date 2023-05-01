@@ -41,7 +41,15 @@ const pluginsFolder = updatesiteFolder + "plugins/";
 outputArchive.append(null, { name: featuresFolder });
 outputArchive.append(null, { name: pluginsFolder });
 
+const featureJarArchive = archiver("zip");
+
+featureJarArchive.finalize();
+
+outputArchive.append(featureJarArchive, { name: featuresFolder + pluginId + ".feature_" + pluginVersion + ".jar" });
+
 outputArchive.finalize();
+
+process.stdout.write(zipFileName);
 
 function getFormattedDate(date) {
   return (
@@ -57,5 +65,3 @@ function getFormattedDate(date) {
 function zeroFill(i) {
   return (i < 10 ? "0" : "") + i;
 }
-
-process.stdout.write(zipFileName);
