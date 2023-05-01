@@ -47,6 +47,12 @@ featureJarArchive.append(replaceTemplatePlaceholders(featureXmlTemplate), { name
 featureJarArchive.finalize();
 
 outputArchive.append(featureJarArchive, { name: featuresFolder + pluginId + ".feature_" + pluginVersion + ".jar" });
+
+const pluginJarArchive = archiver("zip");
+
+pluginJarArchive.finalize();
+
+outputArchive.append(pluginJarArchive, { name: pluginsFolder + zipFileName + ".jar" });
 outputArchive.finalize();
 
 process.stdout.write(zipFileName);
