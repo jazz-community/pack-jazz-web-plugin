@@ -9,18 +9,18 @@ const packageJson = require(path.resolve("./package.json"));
 
 const pluginId = packageJson.zipJazzWebPlugin.pluginId;
 const pluginName = packageJson.name;
-const pluginVersion = packageJson.version + "_" + getFormattedDate(new Date());
+const pluginVersion = `${packageJson.version}_${getFormattedDate(new Date())}`;
 const pluginDescription = packageJson.description;
 const pluginAuthor = packageJson.author;
 const pluginLicense = packageJson.license;
 const pluginFiles = packageJson.zipJazzWebPlugin.pluginFiles;
-const zipFileName = pluginId + "_" + pluginVersion;
-const updatesiteFolder = pluginId + "_updatesite/";
+const zipFileName = `${pluginId}_${pluginVersion}`;
+const updatesiteFolder = `${pluginId}_updatesite/`;
 
 const outputArchive = archiver("zip");
-outputArchive.pipe(fs.createWriteStream(path.resolve("./" + zipFileName + ".zip")));
-outputArchive.append(replacePlaceholders(getTemplate("updatesite.ini")), { name: pluginId + "_updatesite.ini" });
-outputArchive.append(replacePlaceholders(getTemplate("site.xml")), { name: updatesiteFolder + "site.xml" });
+outputArchive.pipe(fs.createWriteStream(path.resolve(`./${zipFileName}.zip`)));
+outputArchive.append(replacePlaceholders(getTemplate("updatesite.ini")), { name: `${pluginId}_updatesite.ini` });
+outputArchive.append(replacePlaceholders(getTemplate("site.xml")), { name: `${updatesiteFolder}site.xml` });
 
 const featureJarArchive = archiver("zip");
 featureJarArchive.append(replacePlaceholders(getTemplate("feature.xml")), { name: "feature.xml" });
@@ -37,15 +37,15 @@ pluginFiles.forEach(function (fileOrDirectory) {
 pluginJarArchive.finalize();
 
 outputArchive.append(featureJarArchive, {
-  name: updatesiteFolder + "features/" + pluginId + ".feature_" + pluginVersion + ".jar",
+  name: `${updatesiteFolder}features/${pluginId}.feature_${pluginVersion}.jar`,
 });
-outputArchive.append(pluginJarArchive, { name: updatesiteFolder + "plugins/" + zipFileName + ".jar" });
+outputArchive.append(pluginJarArchive, { name: `${updatesiteFolder}plugins/${zipFileName}.jar` });
 outputArchive.finalize();
 
 process.stdout.write(zipFileName);
 
 function getTemplate(templateName) {
-  return fs.readFileSync(path.resolve(__dirname, "./templates/" + templateName), "utf8");
+  return fs.readFileSync(path.resolve(__dirname, `./templates/${templateName}`), "utf8");
 }
 
 function replacePlaceholders(inputString) {
