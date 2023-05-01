@@ -50,6 +50,14 @@ outputArchive.append(featureJarArchive, { name: featuresFolder + pluginId + ".fe
 
 const pluginJarArchive = archiver("zip");
 
+pluginFiles.forEach(function (fileOrDirectory) {
+  if (fileOrDirectory.slice(-1) === "/") {
+    pluginJarArchive.directory(fileOrDirectory);
+  } else {
+    pluginJarArchive.file(fileOrDirectory);
+  }
+});
+
 pluginJarArchive.finalize();
 
 outputArchive.append(pluginJarArchive, { name: pluginsFolder + zipFileName + ".jar" });
