@@ -19,11 +19,11 @@ const updatesiteFolder = `${pluginId}_updatesite/`;
 
 const outputArchive = archiver("zip");
 outputArchive.pipe(fs.createWriteStream(path.resolve(`./${zipFileName}.zip`)));
-outputArchive.append(replacePlaceholders(getTemplate("updatesite.ini")), { name: `${pluginId}_updatesite.ini` });
-outputArchive.append(replacePlaceholders(getTemplate("site.xml")), { name: `${updatesiteFolder}site.xml` });
+appendTemplateToArchive(outputArchive, "updatesite.ini", pluginId + "_");
+appendTemplateToArchive(outputArchive, "site.xml", updatesiteFolder);
 
 const featureJarArchive = archiver("zip");
-featureJarArchive.append(replacePlaceholders(getTemplate("feature.xml")), { name: "feature.xml" });
+appendTemplateToArchive(featureJarArchive, "feature.xml");
 featureJarArchive.finalize();
 
 const pluginJarArchive = archiver("zip");
@@ -43,6 +43,10 @@ outputArchive.append(pluginJarArchive, { name: `${updatesiteFolder}plugins/${zip
 outputArchive.finalize();
 
 process.stdout.write(zipFileName);
+
+function appendTemplateToArchive(archive, templateName, outputPrefix = "") {
+  archive.append(replacePlaceholders(getTemplate(templateName)), { name: outputPrefix + templateName });
+}
 
 function getTemplate(templateName) {
   return fs.readFileSync(path.resolve(__dirname, `./templates/${templateName}`), "utf8");
