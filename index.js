@@ -48,23 +48,17 @@ outputArchive.finalize();
 process.stdout.write(zipFileName);
 
 function appendTemplateToArchive(archive, templateName, outputPrefix = "") {
-  archive.append(replacePlaceholders(getTemplate(templateName)), { name: outputPrefix + templateName });
-}
-
-function getTemplate(templateName) {
-  return fs.readFileSync(path.resolve(__dirname, `./templates/${templateName}`), "utf8");
-}
-
-function replacePlaceholders(inputString) {
+  const template = fs.readFileSync(path.resolve(__dirname, `./templates/${templateName}`), "utf8");
   const keys = Object.keys(placeholders)
     .map(function (key) {
       return "\\$" + key + "\\$";
     })
     .join("|");
-
-  return inputString.replace(new RegExp(keys, "g"), function (matched) {
+  const templateOutput = template.replace(new RegExp(keys, "g"), function (matched) {
     return placeholders[matched.substring(1, matched.length - 1)];
   });
+
+  archive.append(templateOutput, { name: outputPrefix + templateName });
 }
 
 function getFormattedDate(date) {
