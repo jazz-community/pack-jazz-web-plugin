@@ -23,18 +23,16 @@ outputArchive.pipe(outputFile);
 
 const templatesFolder = path.resolve(__dirname, "./templates/");
 const updatesiteTemplate = fs.readFileSync(path.resolve(templatesFolder, "./updatesite.ini"), "utf8");
-const updatesiteOutput = updatesiteTemplate.replaceAll("$pluginId$", pluginId);
 const updatesiteFolder = pluginId + "_updatesite/";
 
-outputArchive.append(updatesiteOutput, {
+outputArchive.append(replaceTemplatePlaceholders(updatesiteTemplate), {
   name: pluginId + "_updatesite.ini",
 });
 outputArchive.append(null, { name: updatesiteFolder });
 
 const siteXmlTemplate = fs.readFileSync(path.resolve(templatesFolder, "./site.xml"), "utf8");
-const siteXmlOutput = siteXmlTemplate.replaceAll("$pluginId$", pluginId).replaceAll("$pluginVersion$", pluginVersion);
 
-outputArchive.append(siteXmlOutput, { name: updatesiteFolder + "site.xml" });
+outputArchive.append(replaceTemplatePlaceholders(siteXmlTemplate), { name: updatesiteFolder + "site.xml" });
 
 const featuresFolder = updatesiteFolder + "features/";
 const pluginsFolder = updatesiteFolder + "plugins/";
@@ -44,21 +42,34 @@ outputArchive.append(null, { name: pluginsFolder });
 
 const featureJarArchive = archiver("zip");
 const featureXmlTemplate = fs.readFileSync(path.resolve(templatesFolder, "./feature.xml"), "utf8");
-const featureXmlOutput = featureXmlTemplate
-  .replaceAll("$pluginId$", pluginId)
-  .replaceAll("$pluginName$", pluginName)
-  .replaceAll("$pluginVersion$", pluginVersion)
-  .replaceAll("$pluginDescription$", pluginDescription)
-  .replaceAll("$pluginAuthor$", pluginAuthor)
-  .replaceAll("$pluginLicense$", pluginLicense);
 
-featureJarArchive.append(featureXmlOutput, { name: "feature.xml" });
+featureJarArchive.append(replaceTemplatePlaceholders(featureXmlTemplate), { name: "feature.xml" });
 featureJarArchive.finalize();
 
 outputArchive.append(featureJarArchive, { name: featuresFolder + pluginId + ".feature_" + pluginVersion + ".jar" });
 outputArchive.finalize();
 
 process.stdout.write(zipFileName);
+
+function replaceTemplatePlaceholders(templateString) {
+  const placeholders = new Map([
+    ["$pluginId$", pluginId],
+    ["$pluginName$", pluginName],
+    ["$pluginVersion$", pluginVersion],
+    ["$pluginDescription$", pluginDescription],
+    ["$pluginAuthor$", pluginAuthor],
+    ["$pluginLicense$", pluginLicense],
+  ]);
+  const keys = Array.from(placeholders.keys())
+    .map(function (key) {
+      return key.replace(/\$/g, "\\$");
+    })
+    .join("|");
+
+  return templateString.replace(new RegExp(keys, "g"), function (matched) {
+    return placeholders.get(matched);
+  });
+}
 
 function getFormattedDate(date) {
   return (
