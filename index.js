@@ -20,6 +20,11 @@ const outputFile = fs.createWriteStream(path.resolve("./" + zipFileName + ".zip"
 const outputArchive = archiver("zip");
 
 outputArchive.pipe(outputFile);
+
+outputArchive.append(fs.createReadStream(path.resolve(__dirname, "./templates/updatesite.ini")), {
+  name: pluginId + "_updatesite.ini",
+});
+
 outputArchive.finalize();
 
 function getFormattedDate(date) {
