@@ -19,13 +19,11 @@ const updatesiteFolder = pluginId + "_updatesite/";
 
 const outputArchive = archiver("zip");
 outputArchive.pipe(fs.createWriteStream(path.resolve("./" + zipFileName + ".zip")));
-outputArchive.append(replaceTemplatePlaceholders(getTemplate("updatesite.ini")), {
-  name: pluginId + "_updatesite.ini",
-});
-outputArchive.append(replaceTemplatePlaceholders(getTemplate("site.xml")), { name: updatesiteFolder + "site.xml" });
+outputArchive.append(replacePlaceholders(getTemplate("updatesite.ini")), { name: pluginId + "_updatesite.ini" });
+outputArchive.append(replacePlaceholders(getTemplate("site.xml")), { name: updatesiteFolder + "site.xml" });
 
 const featureJarArchive = archiver("zip");
-featureJarArchive.append(replaceTemplatePlaceholders(getTemplate("feature.xml")), { name: "feature.xml" });
+featureJarArchive.append(replacePlaceholders(getTemplate("feature.xml")), { name: "feature.xml" });
 featureJarArchive.finalize();
 
 const pluginJarArchive = archiver("zip");
@@ -50,7 +48,7 @@ function getTemplate(templateName) {
   return fs.readFileSync(path.resolve(__dirname, "./templates/" + templateName), "utf8");
 }
 
-function replaceTemplatePlaceholders(templateString) {
+function replacePlaceholders(inputString) {
   const placeholders = new Map([
     ["$pluginId$", pluginId],
     ["$pluginName$", pluginName],
@@ -65,7 +63,7 @@ function replaceTemplatePlaceholders(templateString) {
     })
     .join("|");
 
-  return templateString.replace(new RegExp(keys, "g"), function (matched) {
+  return inputString.replace(new RegExp(keys, "g"), function (matched) {
     return placeholders.get(matched);
   });
 }
