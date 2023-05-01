@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/MartinBenninger/zip-jazz-web-plugin/issues"
   },
-  "homepage": "https://github.com/MartinBenninger/zip-jazz-web-plugin#readme"
+  "homepage": "https://github.com/MartinBenninger/zip-jazz-web-plugin#readme",
+  "dependencies": {
+    "archiver": "^5.3.1"
+  }
 }
