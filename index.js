@@ -27,6 +27,7 @@ const updatesiteOutput = updatesiteTemplate.replaceAll("$pluginId$", pluginId);
 outputArchive.append(updatesiteOutput, {
   name: pluginId + "_updatesite.ini",
 });
+outputArchive.append(null, { name: pluginId + "_updatesite/" });
 
 outputArchive.finalize();
 
