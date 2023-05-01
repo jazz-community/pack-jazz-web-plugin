@@ -23,11 +23,17 @@ outputArchive.pipe(outputFile);
 
 const updatesiteTemplate = fs.readFileSync(path.resolve(__dirname, "./templates/updatesite.ini"), "utf8");
 const updatesiteOutput = updatesiteTemplate.replaceAll("$pluginId$", pluginId);
+const updatesiteFolder = pluginId + "_updatesite/";
 
 outputArchive.append(updatesiteOutput, {
   name: pluginId + "_updatesite.ini",
 });
-outputArchive.append(null, { name: pluginId + "_updatesite/" });
+outputArchive.append(null, { name: updatesiteFolder });
+
+const siteXmlTemplate = fs.readFileSync(path.resolve(__dirname, "./templates/site.xml"), "utf8");
+const siteXmlOutput = siteXmlTemplate.replaceAll("$pluginId$", pluginId).replaceAll("$pluginVersion$", pluginVersion);
+
+outputArchive.append(siteXmlOutput, { name: updatesiteFolder + "site.xml" });
 
 outputArchive.finalize();
 
