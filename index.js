@@ -15,7 +15,6 @@ const placeholders = {
   pluginAuthor: packageJson.author,
   pluginLicense: packageJson.license,
 };
-
 const pluginFiles = packageJson.zipJazzWebPlugin.pluginFiles;
 const zipFileName = `${placeholders.pluginId}_${placeholders.pluginVersion}`;
 const updatesiteFolder = `${placeholders.pluginId}_updatesite/`;
@@ -50,9 +49,10 @@ function appendTemplateToArchive(archive, templateName, outputPrefix = "") {
   const keys = Object.keys(placeholders)
     .map((key) => "\\$" + key + "\\$")
     .join("|");
-  const templateOutput = template.replace(new RegExp(keys, "g"), function (matched) {
-    return placeholders[matched.substring(1, matched.length - 1)];
-  });
+  const templateOutput = template.replace(
+    new RegExp(keys, "g"),
+    (match) => placeholders[match.substring(1, match.length - 1)]
+  );
 
   archive.append(templateOutput, { name: outputPrefix + templateName });
 }
