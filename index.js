@@ -62,16 +62,14 @@ function appendTemplateToArchive(archive, templateName, outputPrefix = "") {
 }
 
 function getFormattedDate(date) {
+  const padZero = (i) => (i < 10 ? "0" : "") + i;
+
   return (
     date.getFullYear() +
-    zeroFill(date.getMonth() + 1) +
-    zeroFill(date.getDate()) +
+    padZero(date.getMonth() + 1) +
+    padZero(date.getDate()) +
     "-" +
-    zeroFill(date.getHours()) +
-    zeroFill(date.getMinutes())
+    padZero(date.getHours()) +
+    padZero(date.getMinutes())
   );
-}
-
-function zeroFill(i) {
-  return (i < 10 ? "0" : "") + i;
 }
