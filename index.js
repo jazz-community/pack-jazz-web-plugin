@@ -15,7 +15,7 @@ const placeholders = {
   pluginAuthor: packageJson.author,
   pluginLicense: packageJson.license,
 };
-const pluginFiles = packageJson.zipJazzWebPlugin.pluginFiles;
+const pluginFiles = packageJson.zipJazzWebPlugin.pluginFiles || ["META-INF/", "resources/", "plugin.xml"];
 const zipFileName = `${placeholders.pluginId}_${placeholders.pluginVersion}`;
 const updatesiteFolder = `${placeholders.pluginId}_updatesite/`;
 
