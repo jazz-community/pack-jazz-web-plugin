@@ -30,13 +30,11 @@ appendTemplateToArchive(featureJarArchive, "feature.xml");
 featureJarArchive.finalize();
 
 const pluginJarArchive = archiver("zip");
-pluginFiles.forEach(function (fileOrDirectory) {
-  if (fileOrDirectory.slice(-1) === "/") {
-    pluginJarArchive.directory(fileOrDirectory);
-  } else {
-    pluginJarArchive.file(fileOrDirectory);
-  }
-});
+pluginFiles.forEach((fileOrDirectory) =>
+  fileOrDirectory.slice(-1) === "/"
+    ? pluginJarArchive.directory(fileOrDirectory)
+    : pluginJarArchive.file(fileOrDirectory)
+);
 pluginJarArchive.finalize();
 
 outputArchive.append(featureJarArchive, {
