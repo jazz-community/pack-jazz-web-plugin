@@ -16,11 +16,11 @@ const placeholders = {
   pluginLicense: packageJson.license,
 };
 const pluginFiles = packageJson.zipJazzWebPlugin.pluginFiles || ['META-INF/', 'resources/', 'plugin.xml'];
-const zipFileName = `${placeholders.pluginId}_${placeholders.pluginVersion}`;
+const zipFileName = `${placeholders.pluginId}_${placeholders.pluginVersion}.zip`;
 const updatesiteFolder = `${placeholders.pluginId}_updatesite/`;
 
 const outputArchive = archiver('zip');
-outputArchive.pipe(fs.createWriteStream(path.resolve(`./${zipFileName}.zip`)));
+outputArchive.pipe(fs.createWriteStream(path.resolve(`./${zipFileName}`)));
 appendTemplateToArchive(outputArchive, 'updatesite.ini', placeholders.pluginId + '_');
 appendTemplateToArchive(outputArchive, 'site.xml', updatesiteFolder);
 
@@ -39,7 +39,9 @@ pluginJarArchive.finalize();
 outputArchive.append(featureJarArchive, {
   name: `${updatesiteFolder}features/${placeholders.pluginId}.feature_${placeholders.pluginVersion}.jar`,
 });
-outputArchive.append(pluginJarArchive, { name: `${updatesiteFolder}plugins/${zipFileName}.jar` });
+outputArchive.append(pluginJarArchive, {
+  name: `${updatesiteFolder}plugins/${placeholders.pluginId}_${placeholders.pluginVersion}.jar`,
+});
 outputArchive.finalize();
 
 process.stdout.write(zipFileName);
