@@ -1,3 +1,61 @@
-# pack-jazz-web-plugin
+# Package Jazz Web Plugins
 
-Script for transforming a JavaScript plugin for the IBM Jazz Platform into the format needed by the server
+Use this script to package JavaScript web plugins for extending the IBM Jazz Platform. 
+
+## Install
+
+```
+npm install @martinbenninger/pack-jazz-web-plugin --save-dev
+```
+
+## Configure
+
+The script will take the following from the package.json in the root of your plugin:
+
+```json
+{
+  "name": "your-plugin-name",
+  "version": "your-plugin-version",
+  "description": "your-plugin-description",
+  "author": "your-plugin-author",
+  "license": "your-plugin-license",
+  "zipJazzWebPlugin": {
+    "pluginId": "your-plugin-id (the same as in your plugin.xml)",
+    "pluginFiles": [
+      "..."
+    ]
+  }
+}
+```
+
+The `"pluginFiles"` list is used to specifiy all the files and directories that should be included in the plugin package. Directories are specified by adding a trailing slash `/`. It can be left out and will default to `["META-INF/", "resources/", "plugin.xml"]`.
+
+## Run
+
+Make sure that your current working directory is the root of your web plugin.
+
+### Option 1
+
+Add the script to your package.json:
+
+```json
+"scripts": {
+  "pack": "pack-jazz-web-plugin"
+}
+```
+
+Then run the command:
+
+```
+npm run pack
+```
+
+### Option 2
+
+Alternativly, you can run the package directly using npx:
+
+```
+npx pack-jazz-web-plugin
+```
+
+Executing the package using npx has the advantage that the console output will only contain the created zip file name. This can be used to locate the file in the next step of your CI process.
