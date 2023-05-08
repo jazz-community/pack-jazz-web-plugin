@@ -28,7 +28,7 @@ The script will take the following from the package.json in the root of your plu
 }
 ```
 
-The `"pluginFiles"` list is used to specifiy all the files and directories that should be included in the plugin package. Directories are specified by adding a trailing slash `/`. It can be left out and will default to `["META-INF/", "resources/", "plugin.xml"]`.
+The `"pluginFiles"` list is used to specify all the files and directories that should be included in the plugin package. Directories are specified by adding a trailing slash `/`. It can be left out and will default to `["META-INF/", "resources/", "plugin.xml"]`.
 
 ## Run
 
@@ -52,7 +52,7 @@ npm run pack
 
 ### Option 2
 
-Alternativly, you can run the package directly using npx:
+Alternatively, you can run the package directly using npx:
 
 ```
 npx pack-jazz-web-plugin
