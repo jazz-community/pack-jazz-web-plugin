@@ -1,5 +1,5 @@
 {
-  "name": "pack-jazz-web-plugin",
+  "name": "@jazz-community-org/pack-jazz-web-plugin",
   "version": "1.0.0",
   "description": "Script for transforming a JavaScript plugin for the IBM Jazz Platform into the format needed by the server",
   "bin": "index.js",
