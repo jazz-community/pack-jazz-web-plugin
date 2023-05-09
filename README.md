@@ -1,11 +1,11 @@
 # Package Jazz Web Plugins
 
-Use this script to package JavaScript web plugins for extending the IBM Jazz Platform. 
+Use this script to package JavaScript web plugins for extending the IBM Jazz Platform.
 
 ## Install
 
 ```
-npm install @martinbenninger/pack-jazz-web-plugin --save-dev
+npm install @jazz-community-org/pack-jazz-web-plugin --save-dev
 ```
 
 ## Configure
@@ -21,9 +21,7 @@ The script will take the following from the package.json in the root of your plu
   "license": "your-plugin-license",
   "zipJazzWebPlugin": {
     "pluginId": "your-plugin-id (the same as in your plugin.xml)",
-    "pluginFiles": [
-      "..."
-    ]
+    "pluginFiles": ["..."]
   }
 }
 ```
