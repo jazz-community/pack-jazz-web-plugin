@@ -10,7 +10,7 @@ npm install @jazz-community-org/pack-jazz-web-plugin --save-dev
 
 ## Configure
 
-The script will take the following from the package.json in the root of your plugin:
+The script will take the following from the `package.json` in the root of your plugin:
 
 ```json
 {
@@ -34,7 +34,7 @@ Make sure that your current working directory is the root of your web plugin.
 
 ### Option 1
 
-Add the script to your package.json:
+Add the script to your `package.json`:
 
 ```json
 "scripts": {
@@ -57,3 +57,22 @@ npx pack-jazz-web-plugin
 ```
 
 Executing the package using npx has the advantage that the console output will only contain the created zip file name. This can be used to locate the file in the next step of your CI process.
+
+## Output
+
+A zip file is created with the settings and plugin files configured in the `package.json`. If the script is successful, the name of the zip file will be outputted to the console.
+
+This is the structure of the output file:
+
+```
+id_version_date-time.zip
+├─ id_updatesite
+│  ├─ features
+│  │  ├─ id.feature_version_date-time.jar
+│  │  │  ├─ feature.xml
+│  ├─ plugins
+│  │  ├─ id_version_date-time.jar
+│  │  │  ├─ **/* (all plugin files)
+│  ├─ site.xml
+└─ id_updatesite.ini
+```
