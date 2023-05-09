@@ -15,7 +15,9 @@ jobs:
           node-version: 18
           registry-url: 'https://npm.pkg.github.com'
           scope: '@jazz-community'
-      - run: npm ci
-      - run: npm publish
+      - run: |
+          npm ci
+          sed -i 's+"name": ".*+"name": "@${{ github.repository }}",+' ./package.json
+          npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
