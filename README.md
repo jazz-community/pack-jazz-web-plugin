@@ -19,7 +19,7 @@ The script will take the following from the `package.json` in the root of your p
   "description": "your-plugin-description",
   "author": "your-plugin-author",
   "license": "your-plugin-license",
-  "zipJazzWebPlugin": {
+  "packJazzWebPlugin": {
     "pluginId": "your-plugin-id (the same as in your plugin.xml)",
     "pluginFiles": ["..."]
   }

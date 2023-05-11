@@ -8,14 +8,14 @@ const archiver = require('archiver');
 const packageJson = require(path.resolve('./package.json'));
 
 const placeholders = {
-  pluginId: packageJson.zipJazzWebPlugin.pluginId,
+  pluginId: packageJson.packJazzWebPlugin.pluginId,
   pluginName: packageJson.name,
   pluginVersion: `${packageJson.version}_${getFormattedDate(new Date())}`,
   pluginDescription: packageJson.description,
   pluginAuthor: packageJson.author,
   pluginLicense: packageJson.license,
 };
-const pluginFiles = packageJson.zipJazzWebPlugin.pluginFiles || ['META-INF/', 'resources/', 'plugin.xml'];
+const pluginFiles = packageJson.packJazzWebPlugin.pluginFiles || ['META-INF/', 'resources/', 'plugin.xml'];
 const zipFileName = `${placeholders.pluginId}_${placeholders.pluginVersion}.zip`;
 const updatesiteFolder = `${placeholders.pluginId}_updatesite/`;
 
