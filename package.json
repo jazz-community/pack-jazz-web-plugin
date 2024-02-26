@@ -1,6 +1,6 @@
 {
   "name": "@jazz-community-org/pack-jazz-web-plugin",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Script for packaging a JavaScript plugin for the IBM Jazz Platform",
   "bin": "index.js",
   "repository": {

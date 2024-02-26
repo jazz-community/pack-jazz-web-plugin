@@ -1,0 +1,9 @@
+{
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#372D0D",
+        "titleBar.activeBackground": "#4D3F12",
+        "titleBar.activeForeground": "#FDFBF5"
+    },
+    "prettier.singleQuote": true,
+    "prettier.tabWidth": 2
+}

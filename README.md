@@ -28,6 +28,8 @@ The script will take the following from the `package.json` in the root of your p
 
 The `"pluginFiles"` list is used to specify all the files and directories that should be included in the plugin package. Directories are specified by adding a trailing slash `/`. It can be left out and will default to `["META-INF/", "resources/", "plugin.xml"]`.
 
+Additionally, the environment variable `BUILD_TIMESTAMP` can be used to set a custom timestamp in the created zip file name. Without this, a timestamp will be created from the current time.
+
 ## Run
 
 Make sure that your current working directory is the root of your web plugin.

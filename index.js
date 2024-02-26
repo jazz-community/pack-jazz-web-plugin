@@ -10,7 +10,7 @@ const packageJson = require(path.resolve('./package.json'));
 const placeholders = {
   pluginId: packageJson.packJazzWebPlugin.pluginId,
   pluginName: packageJson.name,
-  pluginVersion: `${packageJson.version}_${getFormattedDate(new Date())}`,
+  pluginVersion: `${packageJson.version}_${process.env.BUILD_TIMESTAMP || getFormattedDate(new Date())}`,
   pluginDescription: packageJson.description,
   pluginAuthor: packageJson.author,
   pluginLicense: packageJson.license,
