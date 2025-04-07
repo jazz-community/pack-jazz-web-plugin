@@ -30,6 +30,8 @@ The `"pluginFiles"` list is used to specify all the files and directories that s
 
 Additionally, the environment variable `BUILD_TIMESTAMP` can be used to set a custom timestamp in the created zip file name. Without this, a timestamp will be created from the current time.
 
+If running in a GitHub workflow, the zip file name will be stored in `${{ steps.STEP_ID.outputs.output_file }}` and can be used to reference the file in a following step.
+
 ## Run
 
 Make sure that your current working directory is the root of your web plugin.
