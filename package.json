@@ -3,6 +3,9 @@
   "version": "2.0.1",
   "description": "Script for packaging a JavaScript plugin for the IBM Jazz Platform",
   "bin": "index.js",
+  "files": [
+    "templates/"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jazz-community/pack-jazz-web-plugin.git"
