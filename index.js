@@ -5,6 +5,7 @@
 const path = require('path');
 const fs = require('fs');
 const archiver = require('archiver');
+const core = require('@actions/core');
 const packageJson = require(path.resolve('./package.json'));
 
 const placeholders = {
@@ -43,6 +44,11 @@ outputArchive.append(pluginJarArchive, {
   name: `${updatesiteFolder}plugins/${placeholders.pluginId}_${placeholders.pluginVersion}.jar`,
 });
 outputArchive.finalize();
+
+if (process.env['GITHUB_ACTIONS']) {
+  // Set the output file name for use in GitHub Actions
+  core.setOutput('output_file', zipFileName);
+}
 
 process.stdout.write(zipFileName);
 
